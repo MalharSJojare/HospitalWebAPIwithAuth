@@ -1,0 +1,63 @@
+
+Hospital DB
+	Patient tbl
+		PatientId FirstName LastName EmailId PhoneNo. AddressLine1 AddressLine2 City State ZipCode
+	Admin Tbl
+		AdminId	FirstName LastName EmailId Password PhoneNo.
+	ConsultationDetails Tbl
+		DetailId PatientId DoctorName Description	TestReq. 
+	ReportTbl		
+		ReportId DetailId LabTest Result ReportingTo
+		
+Create database "AngularHospital"
+use AngularHospital
+Create table TblPatient(
+	PatientId int identity primary key,
+	FirstName varchar(10) not null,
+	LastName varchar(10) not null,
+	PhoneNum varchar(10) not null,
+	EmailId varchar(50),
+	AddressLine1 varchar(30), 
+	AddressLine2 varchar(30), 
+	City varchar(30),
+	State varchar(30),
+	ZipCode varchar(6),
+	CreatedDate datetime,
+	ModifiedDate datetime
+);
+Create table TblAdmin(
+	AdminId int identity primary key,
+	FirstName varchar(10) not null,
+	LastName varchar(10) not null,
+	EmailId varchar(50) not null,
+	Password varchar(30) not null,
+	PhoneNum varchar(10) not null,
+	CreatedDate datetime,
+	ModifiedDate datetime
+);
+Create table TblConsultation(
+	ConsultationId int identity primary key,
+	PatientId int not null,
+	DoctorName varchar(50) not null,
+	Description varchar(200) not null,
+	TestReq bit default 0,
+	CreatedDate datetime,
+	ModifiedDate datetime,
+	foreign key(PatientId) references TblPatient(PatientId)
+);
+Create table TblReport(
+	ReportId int identity primary key,
+	ConsultationId int not null,
+	LabTest varchar(50) not null,
+ 	Result varchar(10) not null,
+	ReportingTo varchar(30) not null, 
+	CreatedDate datetime,
+	ModifiedDate datetime,
+	foreign key(ConsultationId) references TblConsultation(ConsultationId)
+);
+use AngularHospital
+select * from TblConsultation
+select * from TblAdmin
+select * from TblPatient
+insert into TblPatient(FirstName,LastName,PhoneNum,EmailId,AddressLine1,AddressLine2,City,State,ZipCode) values('JGU','gvje','2453456752','JGU@gvge.com','Addl1','AddL2','City','State','123456')
++		Microsoft.EntityFrameworkCore.DbSet<TEntity>.Add returned	{TblPatient {PatientId: -2147482645} Added}	Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry<HospitalWebApi.Hospital.TblPatient>
